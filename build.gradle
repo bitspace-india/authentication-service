@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'org.flywaydb.flyway' version '9.14.1'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation group: 'com.sparkjava', name: 'spark-core', version: '2.9.4'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.32'
+    //log
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
+    //DB
+    implementation 'org.flywaydb:flyway-core:9.14.1'
+    implementation group: 'org.flywaydb', name: 'flyway-mysql', version: '8.5.13'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+flyway {
+    url = 'jdbc:mysql://localhost:3306/authentication'
+    user = 'authentication-service'
+    password = 'authservicepass'
+    schemas = ['public']
+    locations = ['filesystem:src/main/resources/db/migration']
+}
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+}
